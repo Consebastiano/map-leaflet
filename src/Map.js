@@ -23,8 +23,6 @@ const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 function Map({ numberSelected }) {
   const [results, setResults] = useState([]);
 
-  console.log(results, 'results');
-
   const canterMap = [41.890595072868464, 12.49228598077348];
 
   const containerStyle = {
@@ -60,7 +58,6 @@ function Map({ numberSelected }) {
   }, []);
 
   const getSegment = (latlng, polyline) => {
-    console.log('click');
     // get layerpoint of user click
     const latlngs = polyline._latlngs;
     let segments = [];
@@ -86,10 +83,16 @@ function Map({ numberSelected }) {
     // return first entry, which has shortest distance
     const shortestSegment = segments[0];
     return shortestSegment;
-  }
+  };
+
+  //function to get if an object is equal to another object
+  function isEqual(obj1, obj2) {
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
+  };
+
 
   return (
-    <MapContainer center={canterMap} zoom={7} style={containerStyle}>
+    <MapContainer center={canterMap} zoom={7} style={containerStyle} attributionControl={false}>
       <TileLayer
         url="https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=nlNVO6EMWC90nbAoYLNp"
       />
@@ -105,7 +108,12 @@ function Map({ numberSelected }) {
         <Circle center={el} pathOptions={fillBlueOptions} key={index} radius={50} />
       )}
       {results.map((r, i) => (
-        <Polyline key={`polyline-${i}`} positions={r.segment} color="green" />
+        <Polyline key={`polyline-${i}`} positions={r.segment} color="green" eventHandlers={{
+          click: (e) => {
+            const closest = getSegment(e.latlng, e.sourceTarget);
+            setResults([...results].filter(el => !isEqual(el.segment, closest.segment)));
+          }
+        }}/>
       ))}
     </MapContainer>
   )
