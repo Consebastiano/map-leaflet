@@ -5,9 +5,9 @@ import GeoUtil from "leaflet-geometryutil";
 import 'leaflet/dist/leaflet.css';
 
 
-const pathToDraw25 = require('./randomPath25.json');
-const pathToDraw250 = require('./randomPath250.json');
-const pathToDraw1000 = require('./randomPath1000.json');
+const pathToDraw25 = require('./dataset/randomPath25.json');
+const pathToDraw250 = require('./dataset/randomPath250.json');
+const pathToDraw1000 = require('./dataset/randomPath1000.json');
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
   '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -92,9 +92,9 @@ function Map({ numberSelected }) {
 
 
   return (
-    <MapContainer center={canterMap} zoom={7} style={containerStyle} attributionControl={false}>
+    <MapContainer center={canterMap} zoom={6} style={containerStyle} attributionControl={false}>
       <TileLayer
-        url="https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=nlNVO6EMWC90nbAoYLNp"
+        url="https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}@2x.png?key=nlNVO6EMWC90nbAoYLNp"
       />
       {pathToDrawOrdered.map((el, index) =>
         <Polyline pathOptions={{ color: colorArray[index] }} key={index} positions={el} eventHandlers={{
