@@ -1,40 +1,26 @@
+import React from "react";
+import Map from './Map';
+import "./App.css";
 
-import React from 'react';
-import { GoogleMap, useLoadScript } from '@react-google-maps/api';
-import { mapStyles } from './mapStyles';
-
-const containerStyle = {
-  width: '100vw',
-  height: '100vh',
-};
-
-const center = {
-  lat: 35.6804,
-  lng: 139.769,
-};
-
-const options = {
-  styles: mapStyles,
-};
-
-function App() {
-  const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-  });
-
-  if (loadError) return 'Error loading maps';
-  if (!isLoaded) return 'Loading maps';
-
-  return (
-    <div className="App">
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        options={options}
-      ></GoogleMap>
-    </div>
-  );
+export default function App() {
+    const [number, setNumber] = React.useState(25);
+    return (
+            <div className="app-container">
+                <div className="input-container">
+                    <div className="input-label-group" onClick={() => setNumber(25)} >
+                    <input type="radio" id="25points" checked={number === 25} readOnly/>
+                    <label htmlFor="25points">25 points</label>
+                    </div>
+                    <div className="input-label-group" onClick={() => setNumber(250)}>
+                    <input type="radio" id="250points" checked={number === 250} readOnly/>
+                    <label htmlFor="250points">250 points</label>
+                    </div>
+                    <div className="input-label-group" onClick={() => setNumber(1000)}>
+                    <input type="radio"id="1000points"  checked={number === 1000} readOnly/>
+                    <label htmlFor="1000points">1000 points</label>
+                    </div>
+                </div>
+                <Map numberSelected={number} />/
+            </div>
+    );
 }
-
-export default App;
