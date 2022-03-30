@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Circle, MapContainer, Polyline, TileLayer, useMap } from 'react-leaflet';
+import { Circle, MapContainer, Polyline, TileLayer } from 'react-leaflet';
 import GeoUtil from "leaflet-geometryutil";
 import 'leaflet/dist/leaflet.css';
 
@@ -32,11 +32,14 @@ function Map({ numberSelected }) {
 
   useEffect(() => {
     if (!map) return;
-    console.log(map.getBounds());
+    console.log('Boundaries after map loaded:', map.getBounds(), 'Zoom level after map loaded:', map.getZoom()); 
 
     map.on("zoomend", function () {
-      console.log(map.getBounds());
+      console.log('Level of zoom after new zoom:', map.getZoom());
     });
+    map.on("moveend", function() {
+      console.log('Boundaries after map changes:', map.getBounds());
+   });
 
   }, [map]);
 
@@ -96,7 +99,7 @@ function Map({ numberSelected }) {
   };
 
   //function to get if an object is equal to another object
-  function isEqual(obj1, obj2) {
+  const isEqual = (obj1, obj2) => {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   };
 
