@@ -4,12 +4,12 @@ App to test leafLet library in a react project with multiple polylines and point
 
 What is present in this test project:
 
-add polylines to map,
-add points to map,
-select segments from a polyline,
-deselect segment from the selected ones,
-listener on map zoom,
-listener on map pan.
+* add polylines to map,
+* add points to map,
+* select segments from a polyline,
+* deselect segment from the selected ones,
+* listener on map zoom,
+* listener on map pan.
 
 In the project directory, you can run:
 
