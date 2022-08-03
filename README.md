@@ -4,6 +4,7 @@ App to test leafLet library in a react project with multiple polylines and point
 
 What is present in this test project:
 
+* have Bing maps layers,
 * add polylines to map,
 * add points to map,
 * select segments from a polyline,
