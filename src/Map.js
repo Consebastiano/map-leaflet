@@ -1,8 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { Circle, MapContainer, Polyline, TileLayer } from 'react-leaflet';
+import { Circle, LayersControl, MapContainer, Polyline, TileLayer } from 'react-leaflet';
 import GeoUtil from "leaflet-geometryutil";
 import 'leaflet/dist/leaflet.css';
+import { BingLayer } from 'react-leaflet-bing-v2';
 
 
 const pathToDraw25 = require('./dataset/randomPath25.json');
@@ -10,6 +11,8 @@ const pathToDraw250 = require('./dataset/randomPath250.json');
 const pathToDraw1000 = require('./dataset/randomPath1000.json');
 
 const canterMap = [41.890595072868464, 12.49228598077348];
+
+const bing_key = process.env.REACT_APP_BING_KEY
 
 const colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
   '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
@@ -103,12 +106,22 @@ function Map({ numberSelected }) {
     return JSON.stringify(obj1) === JSON.stringify(obj2);
   };
 
-
   return (
     <MapContainer center={canterMap} zoom={6} style={containerStyle} whenCreated={setMap} attributionControl={false}>
-      <TileLayer
+            <TileLayer
         url="https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}@2x.png?key=nlNVO6EMWC90nbAoYLNp"
       />
+       <LayersControl position='topright'>
+              <LayersControl.Overlay name="Bing Maps Roads">
+              <BingLayer  bingkey={bing_key} type="Road"/>
+              </LayersControl.Overlay>
+              <LayersControl.Overlay checked name="Bing Maps Satelite">
+              <BingLayer  bingkey={bing_key} />
+              </LayersControl.Overlay>
+              <LayersControl.Overlay name="Bing Maps Satelite with Labels">
+              <BingLayer  bingkey={bing_key} type="AerialWithLabels" />
+              </LayersControl.Overlay>
+            </LayersControl>
       {pathToDrawOrdered.map((el, index) =>
         <Polyline pathOptions={{ color: colorArray[index] }} key={index} positions={el} eventHandlers={{
           click: (e) => {
